@@ -1,0 +1,44 @@
+<%= form_with model: [@project, @given_datum] do |f| %>
+
+  <div class="form-group">
+    <%= f.text_field :file_type, autofocus: true, class: 'form-control', placeholder: "Type" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :date, class: 'form-control datepicker', placeholder: "Date", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_area :description, :cols => 10, :rows => 5, autofocus: false, class: 'form-control', placeholder: "Description" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :subject, autofocus: true, class: 'form-control', placeholder: "Subject", required: true %>
+  </div>
+
+
+  <div class="form-group">
+    <%= f.text_field :to, autofocus: true, class: 'form-control', placeholder: "To", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :from, autofocus: true, class: 'form-control', placeholder: "From", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.select :in_or_out, GivenDatum::IN_OUT_TYPES, {include_blank: "Select State"}, class: 'form-control', placeholder: "Incomming/Outgoing" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Submit", class: "btn btn-primary btn-block btn-lg" %>
+  </div>
+  <% if params[:action] == "edit" %>
+    <div class="text-center">
+      <%= link_to 'Cancel', project_given_datum_path(@project, @given_datum), class: "btn btn-link text-center" %>
+    </div>
+  <% else %>
+    <div class="text-center">
+      <%= link_to 'Cancel', project_given_data_path(@project), class: "btn btn-link text-center" %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,70 @@
+<div class="row pb-5">
+  <div class="col-md-12 pb-5">
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <%= image_tag('CenturionSurvey-Logo.gif') %>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-md-6 ml-auto mr-auto">
+    <div class="ui-block shadow-lg rounded">
+      <div class="ui-block-content">
+        <h1 class="text-center pb-4">Sign Up</h1>
+
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <%#= devise_error_messages! %>
+
+          <div class="form-group">
+            <%= f.text_field :name, autofocus: true, class: 'form-control', placeholder: "Full Name" %>
+          </div>
+
+          <div class="form-group">
+            <%= f.email_field :email, autofocus: false, class: 'form-control', placeholder: "Email Address", required: true, readonly: @user.email.present? %>
+          </div>
+
+
+          <div class="form-group">
+            <%= text_field_tag('company', @user.company.present? ? @user.company.name : nil, class: 'form-control', placeholder: "Company Name", required: true, readonly: @user.company.present?) %>
+          </div>
+
+          <% if params[:invitation_id] %>
+            <%= hidden_field_tag(:invitation_id, params[:invitation_id]) %>
+          <% end %>
+
+          <div class="form-group">
+            <%= f.text_field :address, autofocus: true, class: 'form-control', placeholder: "Address" %>
+          </div>
+
+          <div class="form-group">
+            <%= f.text_field :abn, autofocus: true, class: 'form-control', placeholder: "ABN" %>
+          </div>
+
+          <div class="form-group">
+            <%= f.text_field :accounts_contact_name, autofocus: true, class: 'form-control', placeholder: "Accounts Contact Name" %>
+          </div>
+
+          <div class="form-group">
+            <%= f.text_field :accounts_contact_number, autofocus: true, class: 'form-control', placeholder: "Accounts Contact Number" %>
+          </div>
+
+          <div class="form-group">
+            <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Password', required: true %>
+          </div>
+
+          <div class="form-group">
+            <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: 'Confirm Password', required: true %>
+          </div>
+
+          <div class="form-group">
+            <%= f.submit "Sign up", class: "btn btn-primary btn-block btn-lg" %>
+          </div>
+        <% end %>
+        <div class="text-center">
+          <%= render "devise/shared/links" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

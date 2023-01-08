@@ -1,0 +1,37 @@
+<%= form_with model: [@project, @calc_register], local: true do |f| %>
+
+  <div class="form-group">
+    <%= f.select :surveyor_id, current_user.company.users.pluck(:first_name, :id),{include_blank: "Select Surveyor"}, {  class: 'form-control selectize', id: 'surveyor_ids', required: true } %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :subject, autofocus: true, class: 'form-control', placeholder: "Subject", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :date, autofocus: true, class: 'datepicker form-control', placeholder: "Date", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_area :calculation_record, :cols => 10, :rows => 5, autofocus: false, class: 'form-control', placeholder: "Calculation Record" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.select :status, CalcRegister::STATUS_TYPES, {include_blank: "Select State"}, class: 'form-control', placeholder: "Status", required: true %>
+  </div>
+
+
+  <div class="form-group">
+    <%= f.submit "Submit", class: "btn btn-primary btn-block btn-lg" %>
+  </div>
+
+  <% if @calc_register.persisted? %>
+    <div class="text-center">
+      <%= link_to 'Cancel', project_calc_register_path(@project,@calc_register), class: "btn btn-link text-center" %>
+    </div>
+  <% else %>
+    <div class="text-center">
+      <%= link_to 'Cancel', project_calc_registers_path, class: "btn btn-link text-center" %>
+    </div>
+  <% end %>
+<% end %>

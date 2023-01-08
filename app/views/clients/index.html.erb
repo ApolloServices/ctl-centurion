@@ -1,0 +1,78 @@
+<% content_for :head do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h2>
+            <div class="row">
+              <div class="col-md-6">
+                Clients
+              </div>
+              <div class="col-md-6">
+                <div class="text-right">
+                  <%= link_to new_client_path, class: 'btn btn-primary' do %>
+                    Add
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </h2>
+        </div>
+        <div class="ui-block-content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-primary">
+                <% if @clients.present? %>
+                  <table id="dttb" class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Unique Id</th>
+                      <th>Client Code</th>
+                      <th>Contact Email</th>
+                      <th class="pl-5">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% @clients.each do |client|%>
+                      <tr>
+                        <td><%= client.name %></td>
+                        <td><%= client.unique_id %></td>
+                        <td><%= client.client_code %></td>
+                        <td><%= client.accounts_contact_email %></td>
+                        <td>
+                          <div class="pl-4">
+                            <%= link_to client_path(client), title: 'View' do %>
+                              <i class="fa fa-list  m-1" style="font-size:19px; color: black; aria-hidden:true"></i>
+                            <% end %>
+                            <%= link_to edit_client_path(client), title: 'Edit' do %>
+                              <i class="fa edit m-1" style="font-size:19px; color: black; aria-hidden:true">&#xf044;</i>
+                            <% end %>
+                            <%= link_to client_path(client), method: :delete, data: {confirm: 'Do you really want to delete this Client?', commit: 'Delete!'}, title: 'Delete' do %>
+                              <i class="fa fa-trash m-1"style="font-size:19px; color: black; aria-hidden:true"></i>
+                            <% end %>
+                          </div>
+                        </td>
+                      </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                <% else %>
+                  <div class="text-center pt-3 mt-3">
+                    <div class="alert alert-warning">No Records Found</div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+

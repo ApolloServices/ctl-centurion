@@ -1,0 +1,50 @@
+<div class="container pb-4">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'settings_menu' %>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h5>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="text-left">
+                  <%= link_to surveyors_path, class: 'btn btn-primary' do %>
+                    All Surveyors
+                  <% end %>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="text-right">
+                  <%= link_to "Edit", edit_surveyor_path(@surveyor), class: 'btn btn-primary' %>
+                </div>
+              </div>
+            </div>
+          </h5>
+        </div>
+        <div class="ui-block-content">
+          <% if @surveyor.present? %>
+            <div class="row pt-3">
+
+              <div class="col-md-3"><b class="card-title">Two Digit Id: </b></div>
+              <div class="col-md-3"><%= @surveyor.two_digit_id %></div>
+
+              <div class="col-md-3"><b class="card-title">Survey Name: </b></div>
+              <div class="col-md-3"><%= @surveyor.name %></div>
+
+              <div class="col-md-3"><b class="card-title">Initials: </b></div>
+              <div class="col-md-3"><%= @surveyor.initials %></div>
+
+              <div class="col-md-3"><b class="card-title">Login: </b></div>
+              <div class="col-md-3"><%= @surveyor.email %></div>
+
+            </div>
+          <% else %>
+            There is Surveyor
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

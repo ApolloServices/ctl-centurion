@@ -1,0 +1,30 @@
+<div class="row pb-5">
+  <div class="col-lg-6 col-md-6 ml-auto mr-auto">
+    <div class="ui-block shadow-lg rounded">
+      <div class="ui-block-content">
+        <h1 class="text-center pb-4">Edit Field Note</h1>
+        <%= form_with model: [@project, @to_field] do |f| %>
+
+          <div class="form-group">
+            <%= f.select :surveyor_id, options_from_collection_for_select(current_user.company.users.order('first_name ASC'), 'id', 'name', current_user.id),{include_blank: "Select Surveyor"}, {  class: 'form-control selectize', id: 'surveyor_ids', required: true } %>
+          </div>
+
+					<div class="form-group">
+						<%= f.select :status, ToField::STATUS_TYPES, {include_blank: "Select Status"}, class: 'form-control', placeholder: "Status" %>
+					</div>
+
+					<div class="form-group">
+						<%= f.text_area :notes, :cols => 10, :rows => 5, autofocus: false, class: 'form-control', placeholder: "Notes", required: true %>
+					</div>
+
+					<div class="form-group">
+						<%= f.submit "Submit", class: "btn btn-primary btn-lg btn-block btn-lg" %>
+					</div>
+					<div class="text-center">
+					<%= link_to 'Cancel', project_to_fields_path(@project), class: "btn btn-link text-center" %>
+					</div>
+				<% end %>
+      </div>
+    </div>
+  </div>
+</div>

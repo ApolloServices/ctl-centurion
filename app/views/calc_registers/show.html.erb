@@ -1,0 +1,55 @@
+<div class="container pb-4">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'projects/job_menu' %>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h5>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="text-left">
+                  <%= link_to "Back", project_calc_registers_path, class: "btn btn-primary" %>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <%=  @project.project_number %> - <%=  @project.name %>
+              </div>
+              <div class="col-md-4">
+                <div class="text-right">
+                  <%= link_to "Edit", edit_project_calc_register_path(@project, @calc_register), class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+          </h5>
+        </div>
+        <div class="ui-block-content">
+          <% if @calc_register.present? %>
+            <div class="row pt-3">
+
+              <div class="col-md-3 pl-5 pb-2"><b class="card-title">DateTime:</b></div>
+              <div class="col-md-3 pb-2"><%= @calc_register.date.strftime('%Y-%m-%d') || 'Not provided' %></div>
+
+              <div class="col-md-3 pl-5"><b class="card-title">Initials: </b></div>
+              <div class="col-md-3"><%= @calc_register.surveyor.try(:full_name_initials) || 'Not provided' %></div>
+
+              <div class="col-md-3 pl-5"><b class="card-title">Subject: </b></div>
+              <div class="col-md-3"><%= @calc_register.subject || 'Not provided' %></div>
+
+              <div class="col-md-3 pl-5"><b class="card-title">Status: </b></div>
+              <div class="col-md-3"><%= @calc_register.status || 'Not provided' %></div>
+
+              <div class="col-md-12 pl-5 pt-4">
+                <h4>Calculation Record:</h4>
+                <p class="card-text"><%= simple_format(@calc_register.try(:calculation_record)) %></p>
+              </div>
+            </div>
+          <% else %>
+            There is no Calc Register
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

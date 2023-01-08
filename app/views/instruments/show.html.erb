@@ -1,0 +1,82 @@
+<div class="container pb-4">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'surveyors/settings_menu' %>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h5>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="text-left">
+                  <%= link_to instruments_path, class: 'btn btn-primary' do %>
+                    Back
+                  <% end %>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="text-right">
+                  <%= link_to "Edit", edit_instrument_path(@instrument), class: 'btn btn-primary' %>
+                </div>
+              </div>
+            </div>
+          </h5>
+        </div>
+        <div class="ui-block-content">
+          <% if @instrument.present? %>
+            <div class="row pt-3">
+
+              <div class="col-md-3"><b class="card-title">Two Digit Id: </b></div>
+              <div class="col-md-3"><%= @instrument.two_digit_id %></div>
+
+              <div class="col-md-3"><b class="card-title">Instrument Name: </b></div>
+              <div class="col-md-3"><%= @instrument.name %></div>
+
+              <div class="col-md-3"><b class="card-title">Instrument Type: </b></div>
+              <div class="col-md-3"><%= @instrument.instrument_type %></div>
+
+              <div class="col-md-3"><b class="card-title">Serial Number: </b></div>
+              <div class="col-md-3"><%= @instrument.serial_number %></div>
+
+              <div class="col-md-3"><b class="card-title">Firmware Version: </b></div>
+              <div class="col-md-3"><%= @instrument.firmware_version %></div>
+
+              <div class="col-md-3"><b class="card-title">Service Due Date: </b></div>
+              <div class="col-md-3"><%= @instrument.service_due_date.strftime('%Y-%m-%d') %></div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+            <div class="row">
+              <div class="col-md-3"><b class="card-title">Actual Service History Files: </b></div>
+              <% if @instrument.actual_service_history_files.present? %>
+                <% @instrument.actual_service_history_files.each do |file| %>
+                  <div class="col-md-3 pl-0">
+                    <%= link_to file.filename, rails_blob_path(file, disposition: "attachment"), class: 'btn btn-link', target: :_blank %>
+                  </div>
+                <% end %>
+              <% else %>
+                <div class="col-md-3">No Files</div>
+              <% end %>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="row">
+              <div class="col-md-3"><b class="card-title">Base Line History Files: </b></div>
+              <% if @instrument.base_line_history_files.present? %>
+                <% @instrument.base_line_history_files.each do |file| %>
+                  <div class="col-md-3 pl-0">
+                    <%= link_to file.filename, rails_blob_path(file, disposition: "attachment"), class: 'btn btn-link', target: :_blank %>
+                  </div>
+                <% end %>
+              <% else %>
+                <div class="col-md-3">No Files</div>
+              <% end %>
+            </div>
+          <% else %>
+            There is no Instrument Found
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

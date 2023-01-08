@@ -1,0 +1,97 @@
+<div class="container pb-4">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'job_menu'%>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h5>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="text-left">
+                  <%= link_to "Back", projects_path, class: "btn btn-primary" %>
+                </div>
+              </div>
+              <div class="col-md-4 pl-5">
+                <%=  @project.project_number %> - <%=  @project.name %>
+              </div>
+              <div class="col-md-4">
+                <div class="text-right">
+                  <%= link_to "Edit", edit_project_path(@project), class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+          </h5>
+        </div>
+        <div class="ui-block-content mb-5">
+          <% if @project.present? %>
+            <div class="row pt-3">
+
+              <div class="col-md-4 pl-5"><b class="card-title">Project Number: </b></div>
+              <div class="col-md-2"><%= @project.project_number %></div>
+
+              <div class="col-md-3 pl-5"><b class="card-title">Project Name: </b></div>
+              <div class="col-md-3"><%= @project.name %></div>
+
+              <div class="col-md-4 pl-5"><b class="card-title">Project Client Code: </b></div>
+              <div class="col-md-2"><%= @project.project_client_code || 'Not Provided' %></div>
+
+              <div class="col-md-3 pl-5"><b class="card-title">Location: </b></div>
+              <div class="col-md-3"><%= @project.location || 'Not Provided'  %></div>
+
+              <div class="col-md-4 pl-5"><b class="card-title">Client Short Name: </b></div>
+              <div class="col-md-2"><%= @project.client_short_name || 'Not Provided' %></div>
+
+              <div class="col-md-3 pl-5"><b class="card-title">Project Authority Code: </b></div>
+              <div class="col-md-3"><%= @project.try(:project_authority_code) || 'Not Provided' %></div>
+
+              <div class="col-md-4 pl-5"><b class="card-title">Project Authority: </b></div>
+              <div class="col-md-2"><%= @project.project_authority %></div>
+
+              <div class="col-md-3 pl-5"><b class="card-title">Instrument Name: </b></div>
+              <div class="col-md-3"><%= @project.instrument.try(:name)|| 'Not Provided' %></div>
+
+              <div class="col-md-4 pl-5"><b class="card-title">Status: </b></div>
+              <div class="col-md-2"><%= @project.status ? 'Active' : 'In-active' %></div>
+
+              <div class="col-md-3 pl-5"><b class="card-title">Controller Name: </b></div>
+              <div class="col-md-3"><%= @project.survey_controller.try(:name) || 'Not Provided' %></div>
+
+<!--              <div class="col-md-12 pl-5 pt-4">-->
+<!--                <div class="row">-->
+<!--                  <div class="col-md-4"><h4 class="card-title">Project drawing title: </h4></div>-->
+<!--                  <div class="col-md-6"><h4><b><%#= simple_format(@project.project_drawing_title) %></b></h4></div>-->
+<!--                </div>-->
+<!--              </div>-->
+
+
+              <div class="col-md-2 pl-5 pt-5"><b class="card-title">Client Line 1:</b></div>
+              <div class="col-md-10 pl-5 pt-5"><%= @project.client_line_1 || 'Not Provided' %></div>
+
+              <div class="col-md-2 pl-5 pt-1"><b class="card-title">Client Line 2:</b></div>
+              <div class="col-md-10 pl-5 pt-1"><%= @project.client_line_2 || 'Not Provided' %></div>
+
+              <div class="col-md-2 pl-5 pt-1"><b class="card-title">Client Line 3:</b></div>
+              <div class="col-md-10 pl-5 pt-1"><%= @project.client_line_3 || 'Not Provided' %></div>
+
+              <div class="col-md-2 pl-5 pt-1"><b class="card-title">Job Line 1:</b></div>
+              <div class="col-md-10 pl-5 pt-1"><%= @project.job_line_1 || 'Not Provided' %></div>
+
+              <div class="col-md-2 pl-5 pt-1"><b class="card-title">Job Line 2:</b></div>
+              <div class="col-md-10 pl-5 pt-1"><%= @project.job_line_2 || 'Not Provided' %></div>
+
+              <div class="col-md-2 pl-5 pt-1"><b class="card-title">Job Line 3:</b></div>
+              <div class="col-md-10 pl-5 pt-1"><%= @project.job_line_3 || 'Not Provided' %></div>
+
+              <div class="col-md-2 pl-5 pt-1"><b class="card-title">Text Angle:</b></div>
+              <div class="col-md-10 pl-5 pt-1"><%= @project.text_angle || 'Not Provided' %></div>
+            </div>
+          <% else %>
+            There is no Project
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

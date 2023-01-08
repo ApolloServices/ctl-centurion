@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'projects/job_menu'%>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h5>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="text-left">
+                  <%= link_to "Back", project_correspondences_path(@project), class: "btn btn-primary" %>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <%=  @project.project_number %> - <%=  @project.name %>
+              </div>
+              <div class="col-md-4">
+                <div class="text-right">
+                  <%= link_to "Edit", edit_project_correspondence_path(@project, @correspondence), class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+          </h5>
+        </div>
+        <div class="ui-block-content">
+          <% if @correspondence.present? %>
+            <div class="row pt-3">
+
+              <div class="col-md-3 pl-5"><b class="card-title">File Type:</b></div>
+              <div class="col-md-3"><%= @correspondence.file_type %></div>
+
+              <div class="col-md-3 pl-5"><b class="card-title">Received Date: </b></div>
+              <div class="col-md-3"><%= @correspondence.date.strftime('%Y-%m-%d') if @correspondence.date %></div>
+
+              <div class="col-md-3 pl-5"><b class="card-title">Subject: </b></div>
+              <div class="col-md-3">
+                <%= @correspondence.subject %>
+              </div>
+
+              <div class="col-md-3 pl-5"><b class="card-title">To: </b></div>
+              <div class="col-md-3">
+                <%= @correspondence.to %>
+              </div>
+
+              <div class="col-md-3 pl-5"><b class="card-title">From: </b></div>
+              <div class="col-md-3">
+                <%= @correspondence.from %>
+              </div>
+
+
+              <div class="col-md-3 pl-5"><b class="card-title">In/Out: </b></div>
+              <div class="col-md-3">
+                <%= @correspondence.in_or_out %>
+              </div>
+
+              <div class="col-md-12 pl-5 pt-4">
+                <h4>Description:</h4>
+                <p class="card-text"><%= simple_format(@correspondence.description) %></p>
+              </div>
+            </div>
+          <% else %>
+            There is no Correspondences
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

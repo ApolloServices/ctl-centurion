@@ -1,0 +1,19 @@
+<%= form_with(model: survey_controller, local: true) do |form| %>
+
+  <%= render 'form_fields', form: form %>
+  <div class="form-group">
+    <% if survey_controller.persisted? %>
+      <div class="float-right">
+        <%= link_to 'Delete', survey_controller, method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit 'Submit', class: 'btn btn-primary' %>
+
+    <% if survey_controller.persisted? %>
+      <%= link_to "Cancel", survey_controller, class: "btn btn-link" %>
+    <% else %>
+      <%= link_to "Cancel", survey_controllers_path, class: "btn btn-link" %>
+    <% end %>
+  </div>
+<% end %>

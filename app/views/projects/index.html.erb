@@ -1,0 +1,67 @@
+<% content_for :head do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-7 text-center">
+            <h2>Projects</h2>
+          </div>
+        </div>
+      </div>
+      <div class="text-right pb-4">
+        <%= link_to "Add Project", new_project_path, class: "btn btn-primary" %>
+      </div>
+      <% if @projects.present? %>
+        <div class="ui-block shadow">
+          <div class="ui-block-content">
+            <table id="dttb" class="table table-hover">
+              <thead>
+              <tr>
+                <th>Project Number</th>
+                <th>Client</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @projects.each do |project| %>
+                <tr>
+                  <td><%= link_to project.project_number, project %></td>
+                  <td><%= project.client.try(:name) %></td>
+                  <td><%= truncate(project.name,length: 40) %></td>
+                  <td><%= project.location %></td>
+                  <td class="pl-4">
+                    <%= check_box_tag "status", project.status, project.status, data: {url: toggle_status_project_path(project), remote: true, method: :patch} %>
+                  </td>
+                  <td>
+                    <div class="pl-4">
+                      <%= link_to project_path(project), title: 'View' do %>
+                        <i class="fa fa-list  m-1" style="font-size:19px; color: black; aria-hidden:true"></i>
+                      <% end %>
+                      <%= link_to edit_project_path(project), title: 'Edit' do %>
+                        <i class="fa edit m-1" style="font-size:19px; color: black; aria-hidden:true">&#xf044;</i>
+                      <% end %>
+                      <%= link_to project_path(project), method: :delete, data: {confirm: 'Do you really want to delete this project?', commit: 'Delete!'}, title: 'Delete' do %>
+                        <i class="fa fa-trash m-1"style="font-size:19px; color: black; aria-hidden:true"></i>
+                      <% end %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      <% else %>
+        <div class="text-center pt-3 mt-3">
+          <div class="alert alert-warning">No Records Found</div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

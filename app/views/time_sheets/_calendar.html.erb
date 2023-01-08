@@ -1,0 +1,122 @@
+<div class="container mt-5">
+  <div class="row pb-2">
+    <div class="col-md-6">
+      <%= link_to "Previous", previous_time_sheets_path(date: @previous_week_start), class: "btn btn-primary text-left" %>
+    </div>
+    <div class="col-md-6 text-right">
+      <%= link_to "Next", next_time_sheets_path(date: @next_week_start), class: "btn btn-primary text-right" %>
+    </div>
+  </div>
+</div>
+<div class="container mt-1">
+  <div class="row">
+    <div class="col-md-12">
+      <table id="c2" class="ui-blocks shadow table table-border table-striped">
+        <thead class="m-0 p-0">
+          <tr>
+            <th scope="col" class="align-middle text-center"><h4>Projects</h4></th>
+            <% @week.each do |day| %>
+              <th scope="col" class="text-center">
+                <%= link_to new_time_sheet_path(date: day), :class => "btn btn-light border border-dark", :remote => true, "data-toggle" => "modal", "data-target" => "exampleModal" do %>
+                  <%= day.strftime("%A") %>
+                <% end %><br>
+                <%= day.strftime('%Y-%m-%d')%>
+              </th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody class="m-0 p-0">
+          <tr>
+            <% @week.each do |day| %>
+            <% end %>
+          </tr>
+          <% if @projects.present?%>
+            <% @projects.each_with_index do |project, index| %>
+              <tr>
+                <td class="project-bar">
+                  <h6><%= project.project_number %>-<%= project.name %></h6>
+                </td>
+                <% for day in 0..6 %>
+                  <td class="text-center">
+                    <% worked_hours = worked_hours(@week[day], project) %>
+                    <% if worked_hours.present? %>
+                      <%= worked_hours %>
+                      <%= link_to edit_time_sheet_path(find_timing_id(@week[day], project), project_id: project.id, date: @week[day]), :class => "pt-0 btn btn-sm", :remote => true, "data-toggle" => "modal", "data-target" => "editModal" do %>
+                        <i class="fa edit m-1" style="font-size:19px; color: black; aria-hidden:true">&#xf044;</i>
+                      <% end %><br>
+                    <% end %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          <% end %>
+          <tr>
+            <th scope="row" class="first-child">
+              <h5>Total</h5>
+            </th>
+            <td class="pl-4"><%= calculate_total(@week[0]) || '' %></td>
+            <td class="pl-4"><%= calculate_total(@week[1]) || '' %></td>
+            <td class="pl-4"><%= calculate_total(@week[2]) || '' %></td>
+            <td class="pl-4"><%= calculate_total(@week[3]) || '' %></td>
+            <td class="pl-4"><%= calculate_total(@week[4]) || '' %></td>
+            <td class="pl-4"><%= calculate_total(@week[5]) || '' %></td>
+            <td class="pl-4 last-child"><%= calculate_total(@week[6]) || '' %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  </div>
+  <div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  </div>
+</div>
+
+<style>
+  .ui-blocks {
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #e6ecf5;
+    margin-bottom: 15px;
+  }
+  #c2 td, th {
+    padding: 20px;
+    /*box-sizing: border-box;*/
+    border: 1px solid #ccc;
+    border-bottom: none !important;
+    border-left: none !important;
+    min-width: 120px;
+  }
+
+  .table thead th {
+    border-bottom: none !important;
+  }
+
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  /* top-left border-radius */
+  table tr:first-child th:first-child {
+    border-top-left-radius: 8px;
+  }
+
+  /* top-right border-radius */
+  table tr:first-child th:last-child {
+    border-top-right-radius: 8px;
+  }
+
+  /* bottom-left border-radius */
+  .first-child {
+    border-bottom-left-radius: 8px;
+  }
+
+  /* bottom-right border-radius */
+  .last-child {
+    border-bottom-right-radius: 8px;
+  }
+
+</style>
+

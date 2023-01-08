@@ -1,0 +1,10 @@
+<div class="col-lg-6 col-md-6 ml-auto mr-auto">
+  <div class="ui-block shadow-lg rounded">
+    <div class="ui-block-content">
+      <h1 class="text-center pb-4">New Surveyor</h1>
+      <%= form_with(model: @surveyor, url: surveyors_path, local: true) do |form| %>
+        <%= render 'form', surveyor: @surveyor, form: form %>
+      <% end %>
+    </div>
+  </div>
+</div>

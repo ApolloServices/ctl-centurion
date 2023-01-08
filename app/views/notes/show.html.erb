@@ -1,0 +1,49 @@
+<div class="container pb-4">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'projects/job_menu' %>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h5>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="text-left">
+                  <%= link_to "All Notes", project_notes_path(@project), class: "btn btn-primary" %>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <%=  @project.project_number %> - <%=  @project.name %>
+              </div>
+              <div class="col-md-4">
+                <div class="text-right">
+                  <%= link_to "Edit", edit_project_note_path(@project, @note), class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+          </h5>
+        </div>
+        <div class="ui-block-content">
+          <% if @note.present? %>
+            <div class="row pt-3">
+
+              <div class="col-md-3 pl-5"><b class="card-title">Note Name:</b></div>
+              <div class="col-md-3"><%= @note.item %></div>
+
+              <div class="col-md-3"><h5 class="card-title">Index: </h5></div>
+              <div class="col-md-3"><%= @note.index %></div>
+
+              <div class="col-md-12 pl-5 pt-4">
+                <h4>Instructions:</h4>
+                <p class="card-text"><%= simple_format(@note.instructions) %></p>
+              </div>
+            </div>
+          <% else %>
+            No Record Found
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

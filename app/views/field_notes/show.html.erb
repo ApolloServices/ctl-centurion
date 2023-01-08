@@ -1,0 +1,109 @@
+<div class="container pb-4">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'projects/job_menu' %>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h5>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="text-left">
+                  <%= link_to "Back", project_field_notes_path, class: "btn btn-primary" %>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <%=  @project.project_number %> - <%=  @project.name %>
+              </div>
+              <div class="col-md-4">
+                <div class="text-right">
+                  <%= link_to "Edit", edit_project_field_note_path(project_id: @field_note.project.id, id: @field_note.id), class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+          </h5>
+        </div>
+        <div class="ui-block-content">
+          <% if @field_note.present? %>
+            <div class="row pt-3">
+
+              <div class="col-md-3 pl-5 pb-2"><b class="card-title">Record ID:</b></div>
+              <div class="col-md-3 pb-2"><%= @field_note.file_id || 'Not provided' %></div>
+
+              <div class="col-md-3 pl-5 pb-2"><b class="card-title">Received Date:</b></div>
+              <div class="col-md-3 pb-2"><%= @field_note.date.strftime('%Y-%m-%d %l:%M %p') if @field_note.date %></div>
+
+              <div class="col-md-3 pl-5"><b class="card-title">Initials: </b></div>
+              <div class="col-md-3"><%= @field_note.surveyor.try(:full_name_initials) || 'Not provided' %></div>
+
+              <% if @field_note.day_job.present? %>
+                <div class="col-md-3 pl-5 pb-2"><b class="card-title">Summary: </b></div>
+                <div class="col-md-3 pb-2">
+                  <a href="<%= @field_note.create_summary_link %>">Summary File</a>
+                </div>
+
+                <div class="col-md-3 pl-5 pb-2"><b class="card-title">Detail: </b></div>
+                <div class="col-md-3 pb-2">
+                  <a href="<%= @field_note.create_detail_link %>">Detail File</a>
+                </div>
+
+                <div class="col-md-3 pl-5 pb-2"><b class="card-title">CSV: </b></div>
+                <div class="col-md-3 pb-2">
+                  <a href="<%= @field_note.create_csv_link %>">CSV file</a>
+                </div>
+
+                <div class="col-md-3 pl-5 pb-2"><b class="card-title">FLD: </b></div>
+                <div class="col-md-3 pb-2">
+                  <a href="<%= @field_note.create_fld_link %>">FLD File</a>
+                </div>
+
+
+                <div class="col-md-3 pl-5 pb-2"><b class="card-title">JXL: </b></div>
+                <div class="col-md-3 pb-2">
+                  <a href="<%= @field_note.create_jxl_link %>">JXL file</a>
+                </div>
+
+                <div class="col-md-3 pl-5 pb-2"><b class="card-title">Job File: </b></div>
+                <div class="col-md-3 pb-2">
+                  <% if @field_note.job_file.attached? %>
+                    <%= link_to @field_note.job_file.filename, rails_blob_path(@field_note.job_file, disposition: "attachment"), title: 'Job File' %>
+                  <% else %>
+                    No file
+                  <% end %>
+                </div>
+
+                <div class="col-md-3 pl-5 pb-2"><b class="card-title">Hand Written Note: </b></div>
+                <div class="col-md-3 pb-2">
+                  <% if @field_note.pdf_file.attached? %>
+                    <%= link_to 'Hand written note', rails_blob_path(@field_note.pdf_file, disposition: "attachment") %>
+                  <% else %>
+                    No File
+                  <% end %>
+                </div>
+
+              <% end %>
+              <div class="col-md-3 pl-5 pb-2"><b class="card-title">Supporting Documents: </b></div>
+              <div class="col-md-3 pb-2">
+                <% if @field_note.supporting_documents.attached? %>
+                  <% @field_note.supporting_documents.each do |sd| %>
+                    <%= link_to sd.filename, rails_blob_path(sd, disposition: "attachment"), class: 'btn btn-link' %>
+                  <% end %>
+                <% else %>
+                  No File
+                <% end %>
+              </div>
+
+              <div class="col-md-12 pl-5 pt-4">
+                <h4>Field Note Description:</h4>
+                <p class="card-text"><%= simple_format(@field_note.try(:description)) %></p>
+              </div>
+            </div>
+          <% else %>
+            There is no Field Note
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

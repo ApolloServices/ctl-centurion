@@ -1,0 +1,19 @@
+<%= form_with(model: instrument, local: true) do |form| %>
+
+  <%= render 'form_fields', form: form %>
+  <div class="form-group">
+    <% if instrument.persisted? %>
+      <div class="float-right">
+        <%= link_to 'Delete', instrument, method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit class: 'btn btn-primary' %>
+
+    <% if instrument.persisted? %>
+      <%= link_to "Cancel", instrument, class: "btn btn-link" %>
+    <% else %>
+      <%= link_to "Cancel", instruments_path, class: "btn btn-link" %>
+    <% end %>
+  </div>
+<% end %>

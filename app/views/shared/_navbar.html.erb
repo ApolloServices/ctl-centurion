@@ -1,0 +1,71 @@
+<% if user_masquerade? %>
+  <div class="alert alert-warning text-center">
+    You're logged in as <b><%= current_user.name %> (<%= current_user.email %>)</b>
+    <%= link_to back_masquerade_path(current_user) do %><%= icon("fas", "times") %> Logout <% end %>
+  </div>
+<% end %>
+
+<nav class="navbar navbar-expand-md navbar-light bg-light-primary">
+  <div class="container">
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <%= image_tag('centurian_small_logo_new.gif') %>
+    <% end %>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarMain">
+      <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+      </ul>
+
+      <ul class="navbar-nav">
+        <% if user_signed_in? %>
+
+        <li class="nav-item">
+          <li class="nav-item dropdown">
+            <%= link_to "#", id: "navbar-dropdown-project", class: "nav-link dropdown-toggle", data: { target: "nav-project-dropdown", toggle: "dropdown" }, aria: { haspopup: true, expanded: false } do %>
+              Projects
+            <% end %>
+            <div id="nav-project-dropdown" class="dropdown-menu dropdown-menu-left" aria-labelledby="navbar-dropdown">
+              <%= link_to "Projects", projects_path, class: "dropdown-item" %>
+              <%= link_to "Tasks", tasks_path, class: "dropdown-item" %>
+            </div>
+          </li>
+          <li class="nav-item"><%= link_to "Clients", clients_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "Settings", surveyors_path, class: "nav-link" %></li>
+          <li class="nav-item dropdown">
+            <%= link_to "#", id: "navbar-dropdown-timesheet", class: "nav-link dropdown-toggle", data: { target: "nav-timesheet-dropdown", toggle: "dropdown" }, aria: { haspopup: true, expanded: false } do %>
+              Time Sheet
+            <% end %>
+            <div id="nav-timesheet-dropdown" class="dropdown-menu dropdown-menu-left" aria-labelledby="navbar-dropdown">
+              <%= link_to "Time Sheet", time_sheets_path, class: "dropdown-item" %>
+              <%= link_to "Reporting", reportings_path, class: "dropdown-item" %>
+            </div>
+          </li>
+          </li>
+
+          <li class="nav-item dropdown">
+            <%= link_to "#", id: "navbar-dropdown", class: "nav-link dropdown-toggle", data: { target: "nav-account-dropdown", toggle: "dropdown" }, aria: { haspopup: true, expanded: false } do %>
+              <%#= image_tag gravatar_image_url(current_user.email, size: 40), height: 20, width: 20, class: "rounded" %>
+              <i class="fas fa-user" style="font-size: 18px;"></i>
+            <% end %>
+            <div id="nav-account-dropdown" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown">
+              <% if current_user.admin? %>
+                <%= link_to "Admin Area", admin_root_path, class: "dropdown-item" %>
+              <% end %>
+              <%= link_to "Account", edit_user_registration_path, class: "dropdown-item" %>
+              <%= link_to "Invite", new_invitation_path, class: "dropdown-item" %>
+              <div class="dropdown-divider"></div>
+              <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+            </div>
+          </li>
+
+        <% else %>
+          <li class="nav-item"><%= link_to "Sign Up", new_user_registration_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "Login", new_user_session_path, class: "nav-link" %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,60 @@
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="editModalLabel">Edit Time Sheet for <%= @project.project_number  %>-<%= @project.name  %> on <%= @date.strftime("%A, %Y-%m-%d") %></h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <h1 class="text-center pb-4">Edit Time Sheet</h1>
+          <%= form_with url: time_sheet_path, method: :put do |f| %>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <%= hidden_field_tag 'date', @date %>
+                  <%= f.select 'timings[project_id]',
+                                 options_for_select(@projects.collect {|r| ["#{r['project_number']} - #{r['name']}", r['id']]}, @time_sheet.project_id),
+                               {include_blank: 'Select Project'},
+                               class: 'checkbox-select form-control'
+                  %>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <%= f.text_field 'timings[description]', value: @time_sheet.description.present? ? @time_sheet.description : nil, autofocus: false, class: 'form-control', placeholder: "Description" %>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <%= f.number_field 'timings[travel_duration]', value: @time_sheet.travel_duration.present? ? @time_sheet.travel_duration : nil, :step => "0.5" , class: 'form-control', placeholder: "Travel Duration" %>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <%= f.number_field 'timings[field_duration]', value: @time_sheet.field_duration.present? ? @time_sheet.field_duration : nil, :step => "0.5" , class: 'form-control', placeholder: "Field Duration" %>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <%= f.number_field 'timings[office_duration]', value: @time_sheet.office_duration.present? ? @time_sheet.office_duration : nil, :step => "0.5" , class: 'form-control', placeholder: "Office Duration" %>
+                </div>
+              </div>
+            </div>
+            <div class="text-right"><%= f.submit nil, class: 'btn btn-primary mt-4' %></div>
+          <% end %>
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+  @media (min-width: 768px) {
+    .modal-lg {
+      width: 90%;
+      max-width:1200px;
+    }
+  }
+</style>

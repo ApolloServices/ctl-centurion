@@ -1,0 +1,23 @@
+<%= form_with model: [@project, @item] do |f| %>
+
+  <div class="form-group">
+    <%= f.text_field :item_name, autofocus: true, class: 'form-control', placeholder: "Item Name", required: true  %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_area :details, :cols => 10, :rows => 5, autofocus: false, class: 'form-control', placeholder: "Details" , required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Submit", class: "btn btn-primary btn-block btn-lg" %>
+  </div>
+  <% if @item.persisted? %>
+    <div class="text-center">
+      <%= link_to "Cancel", project_item_path(@project, @item), class: "btn btn-link" %>
+    </div>
+  <% else %>
+    <div class="text-center">
+      <%= link_to "Cancel", project_items_path(@project), class: "btn btn-link" %>
+    </div>
+  <% end %>
+<% end %>

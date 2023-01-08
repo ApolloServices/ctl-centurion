@@ -1,0 +1,47 @@
+<div class="container pb-4">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'projects/job_menu' %>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h5>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="text-left">
+                  <%= link_to "All Items", project_items_path(@project), class: "btn btn-primary" %>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <%=  @project.project_number %> - <%=  @project.name %>
+              </div>
+              <div class="col-md-4">
+                <div class="text-right">
+                  <%= link_to "Edit", edit_project_item_path(@project, @item), class: "btn btn-primary" %>
+                  <%= link_to "Tasks", project_item_tasks_path(@project,@item), class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+          </h5>
+        </div>
+        <div class="ui-block-content">
+          <% if @item.present? %>
+            <div class="row pt-3">
+
+              <div class="col-md-3 pl-5"><b class="card-title">Item Name:</b></div>
+              <div class="col-md-3"><%= @item.item_name %></div>
+
+              <div class="col-md-12 pl-5 pt-4">
+                <h4>Details:</h4>
+                <p class="card-text"><%= simple_format(@item.details) %></p>
+              </div>
+            </div>
+          <% else %>
+            There is no Item Found
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

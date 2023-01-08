@@ -1,0 +1,91 @@
+<%= form_with model: @project do |f| %>
+
+  <div class="form-group">
+    <%= f.select :client_id, current_user.company.clients.pluck(:name, :id),{include_blank: "Select Client"}, {  class: 'form-control selectize', id: 'client_id', required: true } %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :project_number, autofocus: true, class: 'form-control', placeholder: "Project Number", required: true%>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :name, :cols => 10, :rows => 5, autofocus: false, class: 'form-control', placeholder: "Project Name / Description" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :location, autofocus: true, class: 'form-control', placeholder: "Location" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :client_short_name, autofocus: true, class: 'form-control', placeholder: "Client Short Name" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :project_authority, autofocus: true, class: 'form-control', placeholder: "Project Authority" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :project_authority_code, autofocus: true, class: 'form-control', placeholder: "Project Authority Code" %>
+  </div>
+
+<!--  <div class="form-group">-->
+    <%#= f.text_field :project_client_code, autofocus: true, class: 'form-control', placeholder: "Project Client Code" %>
+<!--  </div>-->
+
+  <%# if @project.persisted? %>
+<!--    <div class="form-group">-->
+      <%#= f.select :instrument_id, current_user.company.instruments.pluck(:name, :id),{include_blank: "Select Instrument"}, {  class: 'form-control selectize', id: 'instrument_ids', required: true } %>
+<!--    </div>-->
+
+<!--    <div class="form-group">-->
+      <%#= f.select :survey_controller_id, current_user.company.survey_controllers.pluck(:name, :id),{include_blank: "Select Controller"}, {  class: 'form-control selectize', id: 'controller_ids', required: true } %>
+<!--    </div>-->
+  <%# end %>
+
+  <div class="form-group">
+    <%= f.text_field :client_line_1, autofocus: true, class: 'form-control', placeholder: "Client Line 1" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :client_line_2, autofocus: true, class: 'form-control', placeholder: "Client Line 2" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :client_line_3, autofocus: true, class: 'form-control', placeholder: "Client Line 3" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :job_line_1, autofocus: true, class: 'form-control', placeholder: "Job Line 1" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :job_line_2, autofocus: true, class: 'form-control', placeholder: "Job Line 2" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :job_line_2, autofocus: true, class: 'form-control', placeholder: "Job Line 3" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.number_field :text_angle, autofocus: true, min: '0', class: 'form-control', placeholder: "Text Angle" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Submit", class: "btn btn-primary btn-block btn-lg" %>
+  </div>
+  <% if params[:action] == "edit" %>
+    <div class="text-center">
+      <%= link_to 'Cancel', project_path(@project), class: "btn btn-link text-center" %>
+    </div>
+  <% else %>
+    <div class="text-center">
+      <%= link_to 'Cancel', projects_path, class: "btn btn-link text-center" %>
+    </div>
+  <% end %>
+<% end %>
+
+<%# if @project.persisted? %>
+  <%#= render(partial: 'add_name_modal', locals: {id: 'instrument-modal', directory: 'instruments', modal_title: 'Add Instrument', model_object: Instrument.new, url: instruments_path}) %>
+  <%#= render(partial: 'add_name_modal', locals: {id: 'controller-modal',directory: 'survey_controllers', modal_title: 'Add Controller', model_object: SurveyController.new, url: survey_controllers_path}) %>
+<%# end %>
+<%= render(partial: 'add_name_modal', locals: {id: 'client-modal',directory: 'clients', modal_title: 'Add Client', model_object: Client.new, url: surveyors_path}) %>

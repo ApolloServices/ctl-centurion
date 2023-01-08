@@ -1,0 +1,105 @@
+<% content_for :head do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'projects/job_menu' %>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h5>
+            <div class="row">
+              <div class="col-md-4">
+                <strong>Given Data</strong>
+              </div>
+              <div class="col-md-4">
+                <%=  @project.project_number %> - <%=  @project.name %>
+              </div>
+              <div class="col-md-4">
+                <div class="text-right">
+                  <%= link_to "Back To Project", project_path(@project), class: "btn btn-primary" %>
+                  <%= link_to "Add", new_project_given_datum_path(@project), class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+
+          </h5>
+        </div>
+        <div class="ui-block-content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-primary">
+                <% if @given_data.present? %>
+                  <table id="dttb" class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th>Record ID</th>
+                      <th>Type</th>
+                      <th>Date Received</th>
+                      <th>Description</th>
+                      <th>To</th>
+                      <th>From</th>
+                      <th>Status</th>
+                      <th class="pl-5">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% @given_data.each do |given_data|%>
+                      <tr>
+                        <td><%= link_to given_data.file_id, project_given_datum_path(@project, given_data) %></td>
+                        <td><%= given_data.file_type %></td>
+                        <td><%= given_data.date.strftime('%Y-%m-%d') %></td>
+                        <td class="text-justify"><%= simple_format(given_data.description) %></td>
+                        <td><%= given_data.to %></td>
+                        <td><%= given_data.from %></td>
+                        <td class="pl-4">
+                          <%= check_box_tag "status", given_data.status, given_data.status, data: {url: project_given_datum_toggle_status_path(@project,given_data ), remote: true, method: :patch} %>
+                        </td>
+                        <td>
+                          <div class="pl-4">
+                            <button class="btn btn-link" type="button" data-toggle="dropdown" title="Links">
+                              <i class="fas fa-file-alt pl-2" style="font-size:19px; margin: -11px; color: black; aria-hidden:true"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <% if given_data.attachment_list.present? %>
+                                <% given_data.attachment_list.each do |link| %>
+                                  <% if link.count == 2 %>
+                                    <li class="pl-2"><a href="<%= link.second %>" class="btn btn-link"><%= link.first %></a></li>
+                                  <% end %>
+                                <% end %>
+                              <% else %>
+                                <p class="alert alert-warning"> No attachement list</p>
+                              <% end %>
+                            </ul>
+                            <%= link_to project_given_datum_path(@project, id: given_data.id), title: 'View' do %>
+                              <i class="fa fa-list  m-1" style="font-size:19px; color: black; aria-hidden:true"></i>
+                            <% end %>
+                            <%= link_to edit_project_given_datum_path(@project, id: given_data.id), title: 'Edit' do %>
+                              <i class="fa edit m-1" style="font-size:19px; color: black; aria-hidden:true">&#xf044;</i>
+                            <% end %>
+                            <%= link_to project_given_datum_path(@project, id: given_data.id), method: :delete, data: {confirm: 'Do you really want to delete this record?', commit: 'Delete!'}, title: 'Delete' do %>
+                              <i class="fa fa-trash m-1"style="font-size:19px; color: black; aria-hidden:true"></i>
+                            <% end %>
+                          </div>
+                        </td>
+                      </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                <% else %>
+                  <div class="text-center pt-3 mt-3">
+                    <div class="alert alert-warning">No Records Found</div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

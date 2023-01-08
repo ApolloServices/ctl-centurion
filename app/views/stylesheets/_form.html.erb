@@ -1,0 +1,123 @@
+<%= form_with(model: stylesheet, local: true) do |form| %>
+
+  <div class="form-group">
+    <%= form.text_field :unique_id, autofocus: true, class: 'form-control', placeholder: "Unique Id", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= form.text_field :name, autofocus: true, class: 'form-control', placeholder: "Name" %>
+  </div>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <%= form.hidden_field :company_id, value: current_user.company.id %>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-4">File: </div>
+      <div class="col-md-8">
+        <%= form.file_field :file %>
+      </div>
+      <% if stylesheet.persisted? && stylesheet.file.attached? %>
+        <div class="col-md-4 pt-3">Existing File: </div>
+        <div class="col-md-8 pt-2 pl-0">
+          <%= link_to "Download job file", rails_blob_path(stylesheet.file, disposition: "attachment"), class: 'btn btn-link' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.text_field :path, autofocus: true, class: 'form-control', placeholder: "Output Storage Path" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.text_field :output_extension, autofocus: true, class: 'form-control', placeholder: "Output Extension" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.text_field :label, autofocus: true, class: 'form-control', placeholder: "Label" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.select :stylesheet_type, Stylesheet::STYLESHEET_TYPES, {include_blank: "Select Type"}, class: 'form-control' %>
+  </div>
+
+
+  <div class='col-md-12 form-group'>
+    <label class='label-style'>
+      Create Slx: &nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="radio" name="xx" id="create_slx_true"> True&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="radio" name="xx" id="create_slx_false"> False
+    </label>
+  </div>
+
+  <div class='col-md-12 pb-3' id='slx_file_field'>
+
+    <div class="row">
+      <div class="col-md-4">Slx File: </div>
+      <div class="col-md-8">
+        <%= form.file_field :slx_template %>
+      </div>
+      <% if form.object.slx_template.attached? %>
+        <div style="height:110px;">
+          <%= link_to "Download slx file", rails_blob_path(stylesheet.slx_template, disposition: "attachment"), class: 'btn btn-link' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <script>
+      $(document).ready(function() {
+
+          <% if form.object.slx_template.attached? %>
+            $("#create_slx_true").prop('checked', true);
+            $("#slx_file_field").show();
+          <% else %>
+            $("#create_slx_false").prop('checked', true);
+            $("#slx_file_field").hide();
+          <% end %>
+          // hook the change events
+          $('#create_slx_true').change(function(){
+              $("#slx_file_field").show();
+          });
+          $('#create_slx_false').change(function(){
+              $("#slx_file_field").hide();
+          });
+
+          $(function() {
+              $('#row_check_box').hide();
+              $('#stylesheet_stylesheet_type').change(function(){
+                  if($('#stylesheet_stylesheet_type').val() == 'Default') {
+                      $('#row_check_box').show();
+                  } else {
+                      $('#row_check_box').hide();
+                  }
+              });
+          });
+      });
+  </script>
+
+  <div class="row pl-3" id="row_check_box">
+    <div class="form-check pb-3">
+      <label class="form-check-label">
+        <%= form.check_box :apply_to_all, {checked: true, class: "form-check-input"} %>
+        Apply To Existing Survey Types
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <% if stylesheet.persisted? %>
+      <div class="float-right">
+        <%= link_to 'Delete', stylesheet, method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit "Submit", class: 'btn btn-primary' %>
+
+    <% if stylesheet.persisted? %>
+      <%= link_to "Cancel", stylesheet, class: "btn btn-link" %>
+    <% else %>
+      <%= link_to "Cancel", stylesheets_path, class: "btn btn-link" %>
+    <% end %>
+  </div>
+<% end %>

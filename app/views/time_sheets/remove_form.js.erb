@@ -1,0 +1,7 @@
+$(document).ready(function() {
+    $('#field_<%= @old_count %>').remove();
+    $('#delete_div_<%= @old_count %>').remove();
+    $('.delete_<%= @old_count %>').remove();
+    $('#stack-full').remove();
+    $('#add_button > button').removeAttr("disabled");
+});

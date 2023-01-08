@@ -1,0 +1,88 @@
+<% content_for :head do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'projects/job_menu'%>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h5>
+            <div class="row">
+              <div class="col-md-4">
+                <strong>Correspondences</strong>
+              </div>
+              <div class="col-md-4">
+                <%=  @project.project_number %> - <%=  @project.name %>
+              </div>
+              <div class="col-md-4">
+                <div class="text-right">
+                  <%= link_to "Back To Project", project_path(@project), class: "btn btn-primary" %>
+                  <%= link_to "Add", new_project_correspondence_path(@project), class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+
+          </h5>
+        </div>
+        <div class="ui-block-content">
+          <div class="row">
+            <div class="col-md-12">
+
+              <% if @correspondences.present? %>
+                <table id="dttb" class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th>Record ID</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>In/Out</th>
+                    <th>To</th>
+                    <th>From</th>
+                    <th>Subject</th>
+                    <th class="pl-5">Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% @correspondences.each do |correspondence|%>
+                    <tr>
+                      <td><%= link_to correspondence.file_id, project_correspondence_path(@project, correspondence) %></td>
+                      <td><%= correspondence.file_type %></td>
+                      <td><%= correspondence.date.strftime('%Y-%m-%d') if correspondence.date %></td>
+                      <td><%= correspondence.in_or_out %></td>
+                      <td><%= correspondence.to %></td>
+                      <td><%= correspondence.from %></td>
+                      <td><%= correspondence.subject %></td>
+                      <td>
+                        <div class="pl-4">
+                          <%= link_to project_correspondence_path(@project, id: correspondence.id), title: 'View' do %>
+                            <i class="fa fa-list  m-1" style="font-size:19px; color: black; aria-hidden:true"></i>
+                          <% end %>
+                          <%= link_to edit_project_correspondence_path(@project, id: correspondence.id), title: 'Edit' do %>
+                            <i class="fa edit m-1" style="font-size:19px; color: black; aria-hidden:true">&#xf044;</i>
+                          <% end %>
+                          <%= link_to project_correspondence_path(@project, id: correspondence.id), method: :delete, data: {confirm: 'Do you really want to delete this Correspondence?', commit: 'Delete!'}, title: 'Delete' do %>
+                            <i class="fa fa-trash m-1"style="font-size:19px; color: black; aria-hidden:true"></i>
+                          <% end %>
+                        </div>
+                      </td>
+                    </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              <% else %>
+                <div class="text-center pt-3 mt-3">
+                  <div class="alert alert-warning">No Records Found</div>
+                </div>
+              <% end %>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

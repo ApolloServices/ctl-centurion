@@ -1,0 +1,20 @@
+<div class="row pb-5">
+  <div class="col-lg-6 col-md-6 ml-auto mr-auto">
+
+    <div class="ui-block shadow-lg rounded">
+      <div class="ui-block-content">
+        <h1 class="text-center pb-4">Invite</h1>
+
+        <%= form_with model: @invitation do |f| %>
+          <div class="form-group">
+            <%= f.email_field :email, autofocus: true, placeholder: 'Email Address', class: 'form-control', required: true %>
+          </div>
+
+          <div class="form-group">
+            <%= f.submit "Send", class: "btn btn-primary btn-block btn-lg" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

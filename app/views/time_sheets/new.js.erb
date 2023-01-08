@@ -1,0 +1,7 @@
+<% if @projects.count > @selected.count %>
+  $("#exampleModal").html('<%= j render "timing_model" %>')
+  $('#exampleModal').modal();
+<% else %>
+  $("#exampleModal").html('<%= j render "no_more_projects_message" %>')
+  $('#exampleModal').modal();
+<% end %>

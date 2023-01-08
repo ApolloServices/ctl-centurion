@@ -1,0 +1,21 @@
+<%#= form_with(model: surveyor, url: surveyors_path, local: true) do |form| %>
+
+  <%= render 'form_fields', form: form %>
+
+  <div class="form-group">
+    <% if surveyor.persisted? %>
+      <div class="float-right">
+        <%= link_to 'Delete', surveyor_path(surveyor), method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit 'Submit', class: 'btn btn-primary' %>
+
+    <% if surveyor.persisted? %>
+      <%= link_to "Cancel", surveyor_path(surveyor), class: "btn btn-link" %>
+    <% else %>
+      <%= link_to "Cancel", surveyors_path, class: "btn btn-link" %>
+      <%= link_to "Invite", new_invitation_path, class: "btn btn-default border border-black float-right" %>
+    <% end %>
+  </div>
+<%# end %>

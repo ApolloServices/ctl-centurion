@@ -1,0 +1,33 @@
+<div class="form-group">
+  <%= text_field_tag('company', current_user.try(:company).try(:name), class: 'form-control', placeholder: "Company Name", readonly: true) %>
+</div>
+
+<div class="form-group">
+  <%= form.number_field :two_digit_id, min: '0', step: '1', id: "digit#{form.object.model_name.name}", autofocus: true, class: 'form-control', placeholder: "Two digit id", required: true %>
+</div>
+<div class="form-group">
+  <%= form.text_field :name, autofocus: true, class: 'form-control', placeholder: "Surveyor Name" %>
+</div>
+
+<div class="form-group">
+  <%= form.text_field :initials, autofocus: true, class: 'form-control', placeholder: "Initials" %>
+</div>
+
+<div class="form-group">
+  <%= form.email_field :email, autofocus: true, class: 'form-control', placeholder: "Login Email" %>
+</div>
+
+<% if !form.object.persisted? %>
+  <div class="form-group">
+    <%= form.text_field :password, autofocus: true, class: 'form-control', placeholder: "Password" %>
+  </div>
+<% end %>
+
+<script>
+    $("#digit<%= form.object.model_name.name %>").on('input', function() {
+        var value = $("#digit<%= form.object.model_name.name %>").val();
+        if (value < 10) {
+            $("#digit<%= form.object.model_name.name %>").val("0" + value);
+        }
+    });
+</script>

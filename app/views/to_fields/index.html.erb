@@ -1,0 +1,90 @@
+<% content_for :head do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'projects/job_menu' %>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h5>
+            <div class="row">
+              <div class="col-md-4">
+                <strong>To Fields</strong>
+              </div>
+              <div class="col-md-4">
+                <%= @project.project_number %> - <%= @project.name %>
+              </div>
+              <div class="col-md-4">
+                <div class="text-right">
+                  <%= link_to "Back To Project",project_path(@project), class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+          </h5>
+        </div>
+        <div class="ui-block-content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-primary">
+
+                <% if @to_fields.present? %>
+                  <div class="container">
+                    <div class="panel-body mb-5">
+                      <table id="dttb" class="table table-hover">
+                        <thead>
+                        <tr>
+                          <th>Record ID</th>
+                          <th>Server DateTime</th>
+                          <th>File</th>
+                          <th>Extension</th>
+                          <th>Status</th>
+                          <th>Initials</th>
+                          <th>Notes</th>
+                          <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% @to_fields.each do |note|%>
+                          <tr class="p-0">
+                            <td><%= note.record_id %></td>
+                            <td><%= note.date.strftime('%Y-%m-%d %l:%M %p') if note.date %></td>
+                            <td>
+                              <% if note.file.attached? %>
+                                <%= link_to note.file.filename, rails_blob_path(note.file, disposition: "attachment"), class: 'btn btn-link' %>
+                              <% end %>
+                            </td>
+                            <td><%= note.extension %></td>
+                            <td><%= note.status %></td>
+                            <td><%= note.try(:surveyor).try(:full_name_initials) %></td>
+                            <td class="text-justify"><%= simple_format(note.notes) %></td>
+                            <td>
+                              <div class="pl-4">
+                                <%= link_to edit_project_to_field_path(@project,note), title: 'Edit' do %>
+                                  <i class="fa edit m-1" style="font-size:19px; color: black; aria-hidden:true">&#xf044;</i>
+                                <% end %>
+                              </div>
+                            </td>
+                          </tr>
+                        <% end %>
+                        </tbody>
+                      </table>
+                <% else %>
+                  <div class="text-center pt-3 mt-3">
+                    <div class="alert alert-warning">No Records Found</div>
+                  </div>
+                <% end %>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

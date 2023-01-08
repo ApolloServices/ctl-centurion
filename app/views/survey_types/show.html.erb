@@ -1,0 +1,95 @@
+<div class="container pb-4">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'surveyors/settings_menu' %>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h5>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="text-left">
+                  <%= link_to survey_types_path, class: 'btn btn-primary' do %>
+                    All Survey Types
+                  <% end %>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="text-right">
+                  <%= link_to "Edit", edit_survey_type_path(@survey_type), class: 'btn btn-primary' %>
+                </div>
+              </div>
+            </div>
+          </h5>
+        </div>
+        <div class="ui-block-content">
+          <% if @survey_type.present? %>
+            <div class="row pt-3">
+
+              <div class="col-md-3"><b class="card-title">2 Digit Id: </b></div>
+              <div class="col-md-3"><%= @survey_type.two_digit_id %></div>
+
+              <div class="col-md-3"><b class="card-title">Description: </b></div>
+              <div class="col-md-3"><%= @survey_type.description %></div>
+              <div class="col-md-12 dropdown-divider mt-4 mb-4"></div>
+
+              <div class="col-md-12">
+                <%= form_with(model: @survey_type, local: true) do |form| %>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h5 class="card-title pl-3">Default Stylesheets: </h5>
+                      <div class="card card-body pt-0">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <% @survey_type.default_stylesheets.each do |stylesheet| %>
+                              <span class="skill-pill skill-pill-normal">
+                                <%= stylesheet.name %>
+                              </span>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <h5 class="card-title pl-3">Optional Stylesheets: </h5>
+                      <div class="card card-body pt-0">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <div class="form-group">
+                              <% if @optional_stylesheets.blank? %>
+                                <div class="form-control text-center"> There are no stylesheets for selection</div>
+                              <% else %>
+                                <%= select_tag 'survey_type[optional_stylesheets]',
+                                               options_for_select(@optional_stylesheets.collect {|r| [r['name'], r['id']]}, @survey_type.optional_stylesheets.pluck(:id)),
+                                               class: 'checkbox-select form-control',
+                                               multiple: true
+                                %>
+                              <% end %>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <%= form.submit 'Submit', class: 'btn btn-primary', disabled: @optional_stylesheets.blank? ? true : false %>
+                          </div>
+                          <div class="col-md-12">
+                            <% @survey_type.optional_stylesheets.each do |stylesheet| %>
+                              <span class="skill-pill skill-pill-normal">
+                                <%= stylesheet.name %>
+                              </span>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            There is no Survey Type
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,71 @@
+
+<div class="form-group">
+  <%= form.number_field :two_digit_id, min: '0', step: '1', id: "digit#{form.object.model_name.name}", autofocus: true, class: 'form-control', placeholder: "Two Digit Id", required: true %>
+</div>
+<div class="form-group">
+  <%= form.text_field :name, autofocus: true, class: 'form-control', placeholder: "Instrument Name" %>
+</div>
+
+<div class="form-group">
+  <%= form.text_field :instrument_type, autofocus: true, class: 'form-control', placeholder: "Instrument Type" %>
+</div>
+
+<div class="form-group">
+  <%= form.text_field :serial_number, autofocus: true, class: 'form-control', placeholder: "Serial Number" %>
+</div>
+
+<div class="form-group">
+  <%= form.text_field :firmware_version, autofocus: true, class: 'form-control', placeholder: "Firmware Version" %>
+</div>
+
+<div class="form-group">
+  <%= form.text_field :service_due_date, class: 'form-control datepicker1', placeholder: "Service Due Date" %>
+</div>
+
+<div class="form-group pl-1">
+  <div class="row">
+    <div class="col-md-4">Actual Service History: </div>
+    <div class="col-md-8">
+      <%= form.file_field :actual_service_history_files, multiple: true, direct_upload: true  %>
+    </div>
+    <% if @instrument && @instrument.persisted? && @instrument.actual_service_history_files.present? %>
+      <div class="col-md-4 pt-3">Existing file: </div>
+      <% @instrument.actual_service_history_files.each do |file| %>
+        <div class="col-md-4 pt-2">
+          <%= link_to file.filename, rails_blob_path(file, disposition: "attachment"), class: 'btn btn-link', target: :_blank %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div class="form-group pl-1">
+  <div class="row">
+    <div class="col-md-4">Base Line History: </div>
+    <div class="col-md-8">
+      <%= form.file_field :base_line_history_files, multiple: true, direct_upload: true %>
+    </div>
+    <% if @instrument && @instrument.persisted? && @instrument.base_line_history_files.present? %>
+      <div class="col-md-4 pt-3">Existing file: </div>
+      <% @instrument.base_line_history_files.each do |file| %>
+        <div class="col-md-4 pt-2">
+          <%= link_to file.filename, rails_blob_path(file, disposition: "attachment"), class: 'btn btn-link', target: :_blank %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<script>
+    $("#digit<%= form.object.model_name.name %>").on('input', function() {
+        var value = $("#digit<%= form.object.model_name.name %>").val();
+        if (value < 10) {
+            $("#digit<%= form.object.model_name.name %>").val("0" + value);
+        }
+    });
+    $('.datepicker1').datepicker({
+        autoclose: false,
+        format: 'yyyy-mm-d'
+    }).on("changeDate", function(e) {
+        $('.datepicker-dropdown').hide();
+    });
+</script>

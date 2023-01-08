@@ -1,0 +1,104 @@
+<%= form_with model: [@project, @field_note] do |f| %>
+  <div class="form-group">
+    <%= f.text_area :description, :cols => 10, :rows => 5, autofocus: false, class: 'form-control', placeholder: "Description", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.select :surveyor_id, options_from_collection_for_select(current_user.company.users.order('first_name ASC'), 'id', 'name', f.object.surveyor_id),{include_blank: "Select Surveyor"}, {  class: 'form-control selectize', id: 'surveyor_ids', required: true } %>
+  </div>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-4">Day Job: </div>
+      <div class="col-md-8">
+        <%= f.file_field :job_file, direct_upload: true %>
+      </div>
+      <% if @field_note.persisted? && @field_note.job_file.attached? %>
+        <div class="col-md-4 pt-3">Existing File: </div>
+        <div class="col-md-8 pt-2 pl-0">
+          <%= link_to @field_note.job_file.filename, rails_blob_path(@field_note.job_file, disposition: "attachment"), class: 'btn btn-link', title: 'Click to Download' %>
+          <%#= link_to 'Job file', project_field_note_show_uploaded_file_path(@field_note.project.id, @field_note.id, job_file: true), class: 'btn btn-link', target: :_blank %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-4">Hand Written Note/pdf: </div>
+      <div class="col-md-8">
+        <%= f.file_field :pdf_file, direct_upload: true %>
+      </div>
+      <% if @field_note.persisted? && @field_note.pdf_file.attached? %>
+        <div class="col-md-4 pt-3">Existing File: </div>
+        <div class="col-md-8 pt-2 pl-0">
+          <%#= link_to 'Hand written note', project_field_note_show_uploaded_file_path(@field_note.project.id, @field_note.id, job_file: false), class: 'btn btn-link', target: :_blank %>
+          <%= link_to "Download Hand Written Notes", rails_blob_path(@field_note.pdf_file, disposition: "attachment"), class: 'btn btn-link' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-4">Supporting Documents: </div>
+      <div class="col-md-8">
+        <%= f.file_field :supporting_documents, direct_upload: true, multiple: true %>
+      </div>
+      <% if @field_note.persisted? && @field_note.supporting_documents.attached? %>
+        <div class="col-md-4 pt-3">Existing Files: </div>
+          <div class="col-md-8 pt-2 pl-2">
+            <div class="row">
+              <% @field_note.supporting_documents.each do |sd| %>
+                <div class="col-md-6 pt-2 pl-2">
+                  <%= link_to sd.filename, rails_blob_path(sd, disposition: "attachment"), class: 'btn btn-link' %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+      <%= f.text_field(:date,
+        value: f.object.date ? f.object.date.strftime('%B %d, %Y %I:%M %p') : nil,
+        class: "form-control datetimepicker-input", data: {target:"#datetimepicker1"}, placeholder: "Date") %>
+      <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+        <div class="input-group-text"><i class="fas fa-calendar-plus"></i></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <%= f.submit "Submit", class: "btn btn-primary btn-lg btn-block btn-lg" %>
+  </div>
+  <% if @field_note.persisted? %>
+    <div class="text-center">
+      <%= link_to 'Cancel', project_field_note_path(@project,@field_note), class: "btn btn-link text-center" %>
+    </div>
+  <% else %>
+    <div class="text-center">
+      <%= link_to 'Cancel', project_field_notes_path, class: "btn btn-link text-center" %>
+    </div>
+  <% end %>
+<% end %>
+<%= render(partial: 'projects/add_name_modal', locals: {id: 'surveyor-modal',directory: 'surveyors', modal_title: 'Add Surveyor', model_object: User.new, url: surveyors_path}) %>
+<script>
+$('#datetimepicker1').datetimepicker({
+  format: 'MMMM D, YYYY h:mm A',
+  stepping: 15,
+  maxDate: new Date(Date.now() + (365 * 24 * 60 * 60 * 1000)),
+  sideBySide: true,
+  icons: {
+    up: 'fas fa-arrow-up',
+    down: 'fas fa-arrow-down',
+    previous: 'fas fa-chevron-left',
+    next: 'fas fa-chevron-right',
+    close: 'fas fa-times'
+  },
+  buttons: {showClose: true }
+});
+</script>

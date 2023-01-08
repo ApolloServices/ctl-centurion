@@ -1,0 +1,60 @@
+<%= form_with(model: survey_type, local: true) do |form| %>
+
+  <div class="form-group">
+    <%= form.number_field :two_digit_id, min: '0', step: '1', id: "digit#{form.object.model_name.name}", autofocus: true, class: 'form-control', placeholder: "Two Digit Id", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= form.text_field :description, autofocus: true, class: 'form-control', placeholder: "Description", required: true %>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label>Optional Stylesheets:</label>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="form-group">
+        <% if @optional_stylesheets.blank? %>
+          <div class="form-control text-center"> There are no stylesheets for selection</div>
+        <% else %>
+          <%= select_tag 'survey_type[optional_stylesheets]',
+                         options_for_select(@optional_stylesheets.collect {|r| [r['name'], r['id']]}, @survey_type.optional_stylesheets.pluck(:id)),
+                         class: 'checkbox-select form-control',
+                         multiple: true
+          %>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
+  <div class="form-group">
+    <% if survey_type.persisted? %>
+      <div class="float-right">
+        <%= link_to 'Delete', survey_type, method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit "Submit", class: 'btn btn-primary' %>
+
+    <% if survey_type.persisted? %>
+      <%= link_to "Cancel", survey_type, class: "btn btn-link" %>
+    <% else %>
+      <%= link_to "Cancel", survey_types_path, class: "btn btn-link" %>
+    <% end %>
+  </div>
+
+  <script>
+      $("#digit<%= form.object.model_name.name %>").on('input', function() {
+          var value = $("#digit<%= form.object.model_name.name %>").val();
+          if (value < 10) {
+              $("#digit<%= form.object.model_name.name %>").val("0" + value);
+          }
+      });
+  </script>
+<% end %>

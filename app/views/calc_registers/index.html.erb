@@ -1,0 +1,81 @@
+<% content_for :head do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'projects/job_menu' %>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h5>
+            <div class="row">
+              <div class="col-md-4">
+                <strong>Given Data</strong>
+              </div>
+              <div class="col-md-4">
+                <%=  @project.project_number %> - <%=  @project.name %>
+              </div>
+              <div class="col-md-4">
+                <div class="text-right">
+                  <%= link_to "Back To Project", project_path(@project), class: "btn btn-primary" %>
+                  <%= link_to "Add", new_project_calc_register_path(@project), class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+
+          </h5>
+        </div>
+        <div class="ui-block-content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-primary">
+                <% if @calc_registers.present? %>
+                  <table id="dttb" class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th>DateTime</th>
+                      <th>Initials</th>
+                      <th>Subject</th>
+                      <th>Calculation Record</th>
+                      <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% @calc_registers.each do |calc_register|%>
+                      <tr>
+                        <td><%= calc_register.date.strftime('%Y-%m-%d') %></td>
+                        <td><%= calc_register.try(:surveyor).try(:full_name_initials) %></td>
+                        <td><%= calc_register.subject %></td>
+                        <td class="text-justify"><%= simple_format(calc_register.calculation_record) %></td>
+                        <td class="p-0">
+                            <%= link_to project_calc_register_path(@project, calc_register), title: 'View' do %>
+                              <i class="fa fa-list  m-1" style="font-size:19px; color: black; aria-hidden:true"></i>
+                            <% end %>
+                            <%= link_to edit_project_calc_register_path(@project, calc_register), title: 'Edit' do %>
+                              <i class="fa edit m-1" style="font-size:19px; color: black; aria-hidden:true">&#xf044;</i>
+                            <% end %>
+                            <%= link_to project_calc_register_path(@project, calc_register), method: :delete, title: 'Delete' do %>
+                              <i class="fa fa-trash m-1"style="font-size:19px; color: black; aria-hidden:true"></i>
+                            <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                <% else %>
+                  <div class="text-center pt-3 mt-3">
+                    <div class="alert alert-warning">No Records Found</div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

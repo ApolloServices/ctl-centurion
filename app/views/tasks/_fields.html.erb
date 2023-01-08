@@ -1,0 +1,56 @@
+<% if full == true%>
+	<div class="form-group">
+			<%#= select_tag 'timmings[][project_id]',
+											options_for_select(current_user.company.projects.collect {|r| [r['name'], r['id']]}),
+											class: 'checkbox-select form-control',
+											include_blank: 'Select Project'
+			%>
+			<%= form.select :project_id, current_user.company.projects.collect {|r| [r['name'], r['id']]},{include_blank: "Select Project"}, {  class: 'form-control selectize', required: true } %>
+			<%#= select_tag 'project_id', current_user.company.projects.pluck(:name, :id),{include_blank: "Select Project"}, {  class: 'form-control selectize' } %>
+	</div>
+<% end %>
+
+<div class="form-group">
+	<%= form.select :surveyor_id, options_from_collection_for_select(current_user.company.users.order('first_name ASC'), 'id', 'name', form.object.present? ? form.object.surveyor_id : nil),{include_blank: "Select Surveyor"}, {  class: 'form-control selectize', id: 'surveyor_ids', required: true } %>
+</div>
+
+<%= hidden_field_tag 'redirect_to', params[:redirect_to].present? ? params[:redirect_to] : nil %>
+
+<div class="form-group">
+	<%= form.text_field :due_date, value: form.object.present? && form.object.due_date.present? ? form.object.due_date.strftime('%Y-%m-%d') : nil, class: 'form-control datepicker', placeholder: "Due Date", required: true %>
+</div>
+
+<div class="form-group">
+	<%= form.text_area :description, :cols => 10, :rows => 5, autofocus: true, class: 'form-control', placeholder: "Description of Task" %>
+</div>
+
+<div class="form-group">
+	<%= form.text_field :completed_date, value: form.object.present? && form.object.completed_date ? form.object.completed_date.strftime('%Y-%m-%d') : nil, autofocus: true, class: 'form-control datepicker', placeholder: "Date Completed" %>
+</div>
+
+<div class="form-group">
+	<%= form.text_area :notes, :cols => 10, :rows => 5, autofocus: false, class: 'form-control', placeholder: "Notes" %>
+</div>
+
+<div class="form-group">
+	<%= form.submit "Submit", class: "btn btn-primary btn-block btn-lg" %>
+</div>
+
+<% if full == true || params[:redirect_to].present? %>
+	<div class="text-center">
+		<%= link_to 'Cancel', tasks_path, class: "btn btn-link text-center" %>
+	</div>
+<% else %>
+	<% if @task.persisted? %>
+		<div class="text-center">
+			<%= link_to 'Cancel', project_task_path(@project,@task), class: "btn btn-link text-center" %>
+		</div>
+	<% else %>
+		<div class="text-center">
+			<%= link_to 'Cancel', project_tasks_path(@project), class: "btn btn-link text-center" %>
+		</div>
+	<% end %>
+<% end %>
+<script>
+    $("#task_description").focus();
+</script>

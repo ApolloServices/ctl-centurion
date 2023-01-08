@@ -1,0 +1,31 @@
+
+<div class="form-group">
+  <%= form.number_field :two_digit_id, min: '0', step: '1', id: "digit#{form.object.model_name.name}", autofocus: true, class: 'form-control', placeholder: "Two Digit Id", required: true %>
+</div>
+<div class="form-group">
+  <%= form.text_field :name, autofocus: true, class: 'form-control', placeholder: "Controller Name" %>
+</div>
+
+<div class="form-group">
+  <%= form.text_field :controller_type, autofocus: true, class: 'form-control', placeholder: "Controller Type" %>
+</div>
+
+<div class="form-group">
+  <%= form.text_field :serial_number, autofocus: true, class: 'form-control', placeholder: "Serial Number" %>
+</div>
+
+<div class="form-group">
+  <%= form.text_field :software_version, autofocus: true, class: 'form-control', placeholder: "Software Version" %>
+</div>
+
+<div class="form-group">
+  <%= form.text_field :controller_login, autofocus: true, class: 'form-control', placeholder: "Controller Login" %>
+</div>
+<script>
+    $("#digit<%= form.object.model_name.name %>").on('input', function() {
+        var value = $("#digit<%= form.object.model_name.name %>").val();
+        if (value < 10) {
+            $("#digit<%= form.object.model_name.name %>").val("0" + value);
+        }
+    });
+</script>

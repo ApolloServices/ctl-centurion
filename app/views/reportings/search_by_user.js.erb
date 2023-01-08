@@ -1,0 +1,2 @@
+$("#time-sheet-table").html('<%= escape_javascript(render :partial => 'reportings/time_sheet_table', locals: {timings: @timings, pagy: @pagy_timings}) %>')
+$('#user-name').html("<%= @name %>");

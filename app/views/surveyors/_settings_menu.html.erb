@@ -1,0 +1,27 @@
+<div class="ui-block mb-0">
+  <div class="ui-block-content">
+    <div class="col-md-12">
+      <ul class="nav nav-tabs text-uppercase" id="myTab" role="tablist">
+        <li class="nav-item link_style">
+          <a class="nav-link <%= 'active' if params[:controller] == 'surveyors' %>" role="tab" aria-selected="true" href="<%= surveyors_path %>">Surveyors</a>
+        </li>
+        <li class="nav-item link_style">
+          <a class="nav-link <%= 'active' if params[:controller] == 'survey_controllers' %>" role="tab" aria-selected="true" href="<%= survey_controllers_path %>">Controllers</a>
+        </li>
+        <li class="nav-item link_style">
+          <a class="nav-link <%= 'active' if params[:controller] == 'instruments' %>" role="tab" aria-selected="true" href="<%= instruments_path %>">Instruments</a>
+        </li>
+        <li class="nav-item link_style">
+          <a class="nav-link <%= 'active' if params[:controller] == 'survey_types' %>" role="tab" aria-selected="true" href="<%= survey_types_path %>">Survey types</a>
+        </li>
+        <li class="nav-item link_style">
+          <a class="nav-link <%= 'active' if params[:controller] == 'stylesheets' %>" role="tab" aria-selected="true" href="<%= stylesheets_path %>">Stylesheets</a>
+        </li>
+<!--        <li class="nav-item link_style">-->
+<!--          <a class="nav-link <%#= 'active' if params[:controller] == 'synchronisations' %>" role="tab" aria-selected="true" href="<%#= synchronisations_path %>">Synchronisations</a>-->
+<!--        </li>-->
+      </ul>
+
+    </div>
+  </div>
+</div>

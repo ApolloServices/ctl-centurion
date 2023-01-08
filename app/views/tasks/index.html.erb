@@ -1,0 +1,86 @@
+<% content_for :head do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'projects/job_menu' %>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h5>
+            <div class="row">
+              <div class="col-md-4">
+                <strong>Tasks</strong>
+              </div>
+              <div class="col-md-4">
+                <%= @project.project_number %> - <%= @project.name %>
+              </div>
+              <div class="col-md-4">
+                <div class="text-right">
+                  <%= link_to "Back To Project",project_path(@project,@task), class: "btn btn-primary" %>
+                  <%= link_to "Add", new_project_task_path, class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+          </h5>
+        </div>
+        <div class="ui-block-content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-primary">
+
+                <% if @tasks.present? %>
+                  <div class="container">
+                    <div class="panel-body mb-5">
+                      <table id="dttb" class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>Due Date</th>
+                            <th>Description of Task</th>
+                            <th>Date Completed</th>
+                            <th>Notes</th>
+                            <th>Initials</th>
+                            <th class="pl-5">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <% @tasks.each do |task| %>
+                          <tr class="p-0">
+                            <td><%= task.due_date.strftime('%Y-%m-%d') if task.due_date %></td>
+                            <td class="text-justify"><%= simple_format(task.description) %></td>
+                            <td><%= task.completed_date.strftime('%Y-%m-%d') if task.completed_date %></td>
+                            <td class="text-justify"><%= simple_format(task.notes) %></td>
+                            <td><%= task.try(:surveyor).try(:full_name_initials) %></td>
+                            <td class="pull-right">
+                                <%= link_to project_task_path(@project,task), title: 'View' do %>
+                                  <i class="fa fa-list  m-1" style="font-size:19px; color: black; aria-hidden:true"></i>
+                                <% end %>
+                                <%= link_to edit_project_task_path(@project,task), title: 'Edit' do %>
+                                  <i class="fa edit m-1" style="font-size:19px; color: black; aria-hidden:true">&#xf044;</i>
+                                <% end %>
+                                <%= link_to project_task_path(@project,task), method: :delete, data: {confirm: 'Do you really want to delete this Task?', commit: 'Delete!'}, title: 'Delete' do %>
+                                  <i class="fa fa-trash m-1" style="font-size:19px; color: black; aria-hidden:true"></i>
+                                <% end %>
+                            </td>
+                          </tr>
+                        <% end %>
+                        </tbody>
+                      </table>
+                <% else %>
+                  <div class="text-center pt-3 mt-3">
+                    <div class="alert alert-warning">No Records Found</div>
+                  </div>
+                <% end %>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

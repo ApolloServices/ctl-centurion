@@ -1,0 +1,1 @@
+json.partial! "survey_types/survey_type", survey_type: @survey_type

@@ -1,0 +1,81 @@
+<% content_for :head do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'surveyors/settings_menu' %>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h2>
+            <div class="row">
+              <div class="col-md-6">
+                Instruments
+              </div>
+              <div class="col-md-6">
+                <div class="text-right">
+                  <%= link_to new_instrument_path, class: 'btn btn-primary' do %>
+                    Add
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </h2>
+        </div>
+        <div class="ui-block-content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-primary">
+                <% if @instruments.present? %>
+                  <table id="dttb" class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th>Two Digit Id</th>
+                      <th>Name</th>
+                      <th>Instrument Type</th>
+                      <th>Serial Number</th>
+                      <th class="pl-5 text-center pr-5">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% @instruments.each do |instrument|%>
+                      <tr>
+                        <td><%= instrument.two_digit_id %></td>
+                        <td><%= instrument.name %></td>
+                        <td><%= instrument.instrument_type %></td>
+                        <td><%= instrument.serial_number %></td>
+                        <td class="pl-5 text-center pr-5">
+                          <div class="pl-1">
+                            <%= link_to instrument_path(id: instrument.id), title: 'View' do %>
+                              <i class="fa fa-list  m-1" style="font-size:19px; color: black; aria-hidden:true"></i>
+                            <% end %>
+                            <%= link_to edit_instrument_path(id: instrument.id), title: 'Edit' do %>
+                              <i class="fa edit m-1" style="font-size:19px; color: black; aria-hidden:true">&#xf044;</i>
+                            <% end %>
+                            <%= link_to instrument_path(id: instrument.id), method: :delete, data: {confirm: 'Do you really want to delete this Instrument?', commit: 'Delete!'}, title: 'Delete' do %>
+                              <i class="fa fa-trash m-1"style="font-size:19px; color: black; aria-hidden:true"></i>
+                            <% end %>
+                          </div>
+                        </td>
+                      </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                <% else %>
+                  <div class="text-center pt-3 mt-3">
+                    <div class="alert alert-warning">No Records Found</div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+

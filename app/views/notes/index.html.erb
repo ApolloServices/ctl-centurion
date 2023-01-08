@@ -1,0 +1,77 @@
+<% content_for :head do %>
+  <meta name="turbolinks-cache-control" content="no-cache">
+<% end %>
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'projects/job_menu' %>
+    </div>
+    <div class="col-md-12">
+      <div class="ui-block shadow">
+        <div class="ui-block-title">
+          <h5>
+            <div class="row">
+              <div class="col-md-4">
+                <strong>Notes</strong>
+              </div>
+              <div class="col-md-4">
+                <%=  @project.project_number %> - <%=  @project.name %>
+              </div>
+              <div class="col-md-4">
+                <div class="text-right">
+                  <%= link_to "Back To Project", project_path(@project), class: "btn btn-primary" %>
+                  <%= link_to "Add", new_project_note_path(@project), class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+          </h5>
+        </div>
+        <div class="ui-block-content">
+          <div class="row">
+            <div class="col-md-12">
+
+              <% if @notes.present? %>
+                <table id="dttb" class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th>Index</th>
+                    <th>Item Name</th>
+                    <th class="pl-5">Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% @notes.each do |note|%>
+                    <tr>
+                      <td class="pl-4"><%= note.index %></td>
+                      <td class="pl-4"><%= note.item %></td>
+                      <td class="pull-right">
+                        <div class="pl-4">
+                          <%= link_to project_note_path(@project,id: note.id) do %>
+                            <i class="fa fa-list  m-1" title="Show" style="font-size:19px; color: black; aria-hidden:true"></i>
+                          <% end %>
+                          <%= link_to edit_project_note_path(@project, id: note.id) do %>
+                            <i class="fa edit m-1" title="Edit" style="font-size:19px; color: black; aria-hidden:true">&#xf044;</i>
+                          <% end %>
+                          <%= link_to project_note_path(@project, id: note.id), method: :delete, data: {confirm: 'Do you really want to delete this Note?', commit: 'Delete!'} do %>
+                            <i class="fa fa-trash m-1" title="Delete" style="font-size:19px; color: black; aria-hidden:true"></i>
+                          <% end %>
+                        </div>
+                      </td>
+                    </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              <% else %>
+                <div class="text-center pt-3 mt-3">
+                  <div class="alert alert-warning">No Records Found</div>
+                </div>
+              <% end %>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

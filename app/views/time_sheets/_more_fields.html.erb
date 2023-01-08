@@ -1,0 +1,33 @@
+<div class="row mt-3">
+    <%= render "fields" %>
+</div>
+<script>
+  $(document).ready(function() {
+    $('body').on('click', '.add_form_field_<%= count %>', function (e) {
+      // this is for disabling already seleced values
+      let ids_array = [];
+      $('select.checkbox-select > option:selected').each(function() {
+          ids_array.push(this.value);
+      });
+      e.preventDefault();
+      $.ajax({
+        type: "GET",
+        url: "/time_sheets/add_form",
+        data: {
+            count: <%= count %>,
+            selected: ids_array
+        }
+      });
+    });
+
+    $('body').on('click', '.delete_<%= count %>', function (e) {
+      e.preventDefault();
+      $.ajax({
+        type: "GET",
+        url: "/time_sheets/remove_form",
+        data: {count: <%= count %>},
+      });
+    });
+    
+  });
+</script>

@@ -1,0 +1,53 @@
+<div class="ui-block mb-0">
+  <div class="ui-block-content">
+    <div class="col-md-12">
+      <ul class="nav nav-tabs text-uppercase" id="myTab" role="tablist">
+        <li class="link_style pt-1 pl-0 mt-1 mb-3 nav-item dropdown col-md-12">
+
+          <div class="row float-right" id="job_menu">
+            <div class="col-md-5 float-right pr-0"><h5 class="pt-2">Project: </h5></div>
+            <div class="col-md-7 pl-0">
+              <%= text_field_tag :search, params[:search], class: "search-query form-control", placeholder: "Name", type: "search", data: {autocomplete: autocomplete_name_projects_path} %>
+            </div>
+          </div>
+
+        </li>
+        <li class="nav-item link_style">
+          <a class="nav-link pl-4 pr-4 <%= 'active' if params[:controller] == 'projects' %>" role="tab" aria-selected="true" href="<%= project_path(@project) %>">PROJECT</a>
+        </li>
+        <li class="nav-item link_style">
+          <a class="nav-link pl-4 pr-4 <%= 'active' if params[:controller] == 'tasks' %>" role="tab" aria-selected="true" href="<%= project_tasks_path(@project) %>">Tasks</a>
+        </li>
+        <li class="nav-item link_style">
+          <a class="nav-link pl-4 pr-4 <%= 'active' if params[:controller] == 'to_fields' %>" role="tab" aria-selected="true" href="<%= project_to_fields_path(@project) %>">TO FIELD</a>
+        </li>
+        <li class="nav-item link_style">
+          <a class="nav-link pl-4 pr-4 <%= 'active' if params[:controller] == 'field_notes' %>" role="tab" aria-selected="true" href="<%= project_field_notes_path(@project) %>">FIELD NOTES</a>
+        </li>
+        <li class="nav-item link_style">
+          <a class="nav-link pl-4 pr-4 <%= 'active' if params[:controller] == 'given_data' %>" role="tab" aria-selected="true" href="<%= project_given_data_path(@project) %>">given data</a>
+        </li>
+        <li class="nav-item link_style">
+          <a class="nav-link pl-4 pr-4 <%= 'active' if params[:controller] == 'calc_registers' %>" role="tab" aria-selected="true" href="<%= project_calc_registers_path(@project) %>">Calc Register</a>
+        </li>
+        <li class="nav-item link_style">
+          <a class="nav-link pl-4 pr-4 <%= 'active' if params[:controller] == 'correspondences' %>" role="tab" aria-selected="true" href="<%= project_correspondences_path(@project) %>">Correspondence</a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+<script type="text/javascript" charset="utf-8">
+    var controller = '<%= params[:controller] %>';
+    $('#search').bind('railsAutocomplete.select', function(event, data){
+        $.ajax({
+            type: 'GET',
+            dataType: "script",
+            data: {
+                selected_tab: controller
+            },
+            url: '/projects/'+data.item.id
+        });
+    });
+</script>

@@ -1,0 +1,2 @@
+module ServaysHelper
+end

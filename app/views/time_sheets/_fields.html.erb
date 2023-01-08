@@ -1,0 +1,39 @@
+<div class="col-md-3">
+    <div class="form-group">
+        <%= select_tag 'timmings[][project_id]',
+                        options_for_select(current_user.company.projects.where("name <> '' AND project_number <> ''").order(:project_number).collect {|r| ["#{r['project_number']} - #{r['name']}", r['id']]}, disabled: @selected),
+                        class: 'checkbox-select form-control',
+                        include_blank: 'Select Project'
+        %>
+        <%#= select_tag 'project_id', current_user.company.projects.pluck(:name, :id),{include_blank: "Select Project"}, {  class: 'form-control selectize' } %>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="form-group">
+        <%= text_field_tag 'timmings[][description]',nil, autofocus: false, class: 'form-control', placeholder: "Description" %>
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="form-group">
+        <%= number_field_tag 'timmings[][travel_duration]',nil, :step => "0.5" , class: 'form-control', placeholder: "Travel Duration" %>
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="form-group">
+        <%= number_field_tag 'timmings[][field_duration]',nil, :step => "0.5" , class: 'form-control', placeholder: "Field Duration" %>
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="form-group">
+        <%= number_field_tag 'timmings[][office_duration]',nil, :step => "0.5" , class: 'form-control', placeholder: "Office Duration" %>
+    </div>
+</div>
+
+<script>
+    $("select.checkbox-select").change(function () {
+        $("select.checkbox-select option[value='" + $(this).data('index') + "']").prop('disabled', false);
+        $(this).data('index', this.value);
+        $("select.checkbox-select option[value='" + this.value + "']:not([value=''])").prop('disabled', true);
+        $(this).find("option[value='" + this.value + "']:not([value=''])").prop('disabled', false);
+    });
+</script>
